@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  endPoints: {
+    usuario: 'https://crudapi20210308182848.azurewebsites.net/api/cliente',
+  }
 };
 
 /*
