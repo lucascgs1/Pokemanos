@@ -1,6 +1,9 @@
 //page
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { CadastroComponent } from './pages/cadastro/cadastro.component';
+import { RecuperarSenhaComponent } from './pages/recuperar-senha/recuperar-senha.component';
 
 //module
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +20,9 @@ import { IConfig, NgxMaskModule } from 'ngx-mask';
   declarations: [
     AppComponent,
     HomeComponent,
+    LoginComponent,
+    CadastroComponent,
+    RecuperarSenhaComponent,
   ],
   imports: [
     BrowserModule,

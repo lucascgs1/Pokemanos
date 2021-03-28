@@ -1,7 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Pokemanos.Api.Model;
+using Pokemanos.Model;
+using Pokemanos.Services.Interfaces;
+using Pokemones.API.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Pokemanos.Api.Controllers
@@ -10,36 +18,66 @@ namespace Pokemanos.Api.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        // GET: api/<UsuarioController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IOptions<AppSettings> appSettings;
+        private readonly ILogger<UsuarioController> _logger;
+
+        public UsuarioController(
+            ILogger<UsuarioController> logger,
+            IOptions<AppSettings> appSettings
+            )
         {
-            return new string[] { "value1", "value2" };
+            this._logger = logger;
+            this.appSettings = appSettings;
         }
 
-        // GET api/<UsuarioController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
-        // POST api/<UsuarioController>
+
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("cadastro")]
+        [AllowAnonymous]
+        public IActionResult Register([FromServices] IUsuarioServices usuarioServices, [FromBody] Usuario usuario)
         {
+            try
+            {
+                var teste = this.appSettings;
+
+                var teste2 = Environment.GetEnvironmentVariable("AppSettings");
+                if (ModelState.IsValid)
+                {
+                    var newUser = usuarioServices.Save(usuario);
+                    var token = TokenHelper.GenerateToken(newUser, this.appSettings.Value.Secret);
+
+                    return Ok(new { usuario = newUser, token });
+                }
+                else
+                {
+                    return ValidationProblem();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
 
-        // PUT api/<UsuarioController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Post([FromServices] IUsuarioServices usuarioServices, [FromBody] Usuario usuario)
         {
-        }
+            try
+            {
+                var user = usuario;
 
-        // DELETE api/<UsuarioController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+                int.TryParse(TokenHelper.GetClaims(User.Identity, ClaimTypes.Authentication), out int id);
+                usuarioServices.Save(user, id);
+
+                return Ok(new { usuario });
+            }
+            catch (Exception ex)
+            {
+                return ValidationProblem(ex.Message);
+            }
         }
     }
 }

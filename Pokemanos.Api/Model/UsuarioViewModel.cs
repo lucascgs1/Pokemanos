@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
-namespace Pokemanos.Model
+namespace Pokemanos.Api.Model
 {
-    public class Usuario
+    public class UsuarioViewModel
     {
-        [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é Obrigatório")]
@@ -23,19 +25,11 @@ namespace Pokemanos.Model
         [EmailAddress]
         [Display(Name = "E-mail", Prompt = "Digite o {0}")]
         public string Email { get; set; }
-      
+
         [Required(ErrorMessage = "O campo {0} é Obrigatório")]
         [Display(Name = "Telefone", Prompt = "Digite o {0}")]
+        [JsonIgnore]
         public string Senha { get; set; }
 
-        [Required(ErrorMessage = "O campo {0} é Obrigatório")]
-        [Phone]
-        [Display(Name = "Telefone", Prompt = "Digite o {0}")]
-        public string Telefone { get; set; }
-
-        [Required(ErrorMessage = "O campo {0} é Obrigatório")]
-        [DataType(DataType.DateTime)]
-        [Display(Name = "Data", Prompt = "Digite o {0}")]
-        public DateTime DataCadastro { get; set; }
     }
 }

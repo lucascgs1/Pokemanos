@@ -23,6 +23,9 @@ namespace Pokemanos.Api
             // Configurar banco
             services.AddDatabaseSetup(Configuration);
 
+            // ASP.NET Identity Settings & JWT
+            services.AddIdentitySetup(Configuration);
+
             // Permitir cors
             services.AddCors();
 
@@ -62,6 +65,7 @@ namespace Pokemanos.Api
                 .AllowAnyHeader()
             );
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

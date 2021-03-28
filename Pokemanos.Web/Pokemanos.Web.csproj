@@ -10,4 +10,8 @@
     <None Remove="node_modules\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="src\app\pages\cadastro\cadastro.component.ts~RFeb9fe49.TMP" />
+  </ItemGroup>
+
 </Project>

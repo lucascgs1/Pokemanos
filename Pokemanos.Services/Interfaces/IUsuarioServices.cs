@@ -7,5 +7,6 @@ namespace Pokemanos.Services.Interfaces
 {
     public interface IUsuarioServices
     {
+        Usuario Save(Usuario usuario, int usuarioId = 0);
     }
 }
