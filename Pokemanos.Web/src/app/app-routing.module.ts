@@ -2,6 +2,7 @@
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/Account/login/login.component';
 import { CadastroComponent } from './pages/Account/cadastro/cadastro.component';
+import { RecuperarSenhaComponent } from './pages/Account/recuperar-senha/recuperar-senha.component';
 
 // package
 import { NgModule } from '@angular/core';
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'editar',
     component: CadastroComponent
+  },
+  {
+    path: 'recuperar-senha',
+    component: RecuperarSenhaComponent
   },
 
 

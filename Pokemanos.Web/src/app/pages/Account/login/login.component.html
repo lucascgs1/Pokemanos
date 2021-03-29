@@ -22,15 +22,33 @@
           <div class="col-12 form-group">
             <label for="senha" class="control-label">senha:</label>
             <input type="password" class="form-control" formControlName="senha" placeholder="******" [ngClass]="{'is-invalid': ((loginForm.controls['senha'].touched || isSubmited) && loginForm.value.senha == '')}">
-            <div *ngIf="(loginForm.controls['nome'].touched || isSubmited) && loginForm.value.senha == ''" class="invalid-feedback">
+            <div *ngIf="(loginForm.controls['senha'].touched || isSubmited) && loginForm.value.senha == ''" class="invalid-feedback">
               <div class="" *ngIf="loginForm.controls['senha'].errors != null && loginForm.controls['senha'].errors.required">
                 Senha é obrigatório
               </div>
             </div>
           </div>
 
+
+          <div class="col-12 form-group">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" formControlName="lembrar" id="lembrar">
+              <label class="form-check-label" for="lembrar" >
+                Lembrar-me
+              </label>
+            </div>
+
+            <a class="esqueci-senha" routerLink="/recuperar-senha">
+              esqueci minha senha
+            </a>
+          </div>
+
           <div class="col-12 mb-2">
             <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+          </div>
+
+          <div class="col-12 mb-2">
+            <a  class="btn btn-secondary btn-block" routerlink="/cadastro">Cadastro</a>
           </div>
         </form>
       </div>

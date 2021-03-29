@@ -4,9 +4,13 @@
 
 export const environment = {
   production: false,
+  //endPoints: {
+  //  usuario: 'https://localhost:44302/api/usuario',
+  //  conta: 'https://localhost:44302/api/Account',
+  //}
   endPoints: {
-    usuario: 'https://localhost:44302/api/usuario',
-    conta: 'https://localhost:44302/api/Account',
+    usuario: 'https://pokemanosapi20210329164501.azurewebsites.net/api/usuario',
+    conta: 'https://pokemanosapi20210329164501.azurewebsites.net/api/account',
   }
 };
 

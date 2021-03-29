@@ -43,8 +43,6 @@ export class UsuarioService {
     if (usuario.id == 0) {
       url += '/cadastro'
     }
-
-    console.log(url);
     return this._http.get<any>({ url: 'https://example-api/products', cacheMins: 5 })
   }
 
@@ -75,7 +73,7 @@ export class UsuarioService {
       // Erro ocorreu no lado do servidor
       errorMessage = `Código do erro: ${error.status}, ` + `menssagem: ${error.message}`;
     }
-    console.log(errorMessage);
+    console.error(errorMessage);
     return throwError(errorMessage);
   }
 

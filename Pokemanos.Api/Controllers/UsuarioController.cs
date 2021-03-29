@@ -34,7 +34,7 @@ namespace Pokemanos.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        //[Authorize]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult GetById([FromServices] IUsuarioServices usuarioServices, int id)

@@ -10,7 +10,6 @@ export class TokenService {
   constructor(
     private cacheService: CacheService
   ) {
-    this.getToken();
   }
 
   setToken(token: string) {

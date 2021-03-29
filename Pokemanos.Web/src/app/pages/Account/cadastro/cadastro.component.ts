@@ -8,6 +8,7 @@ import { UsuarioService } from '../../../core/services/usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { AutenticacaoService } from '../../../core/services/util/autenticacao.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -26,10 +27,13 @@ export class CadastroComponent implements OnInit {
     nome: ['', [Validators.required]],
     sobrenome: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$'),],],
-    telefone: ['', [Validators.required]]
+    telefone: [''],
+    senha: ['', Validators.required],
+    confirmarSenha: ['', Validators.required]
   });
 
   constructor(
+    public autenticacaoService: AutenticacaoService,
     private activatedRoute: ActivatedRoute,
     private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
@@ -38,62 +42,57 @@ export class CadastroComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.usuario = this.autenticacaoService.getStorageUser() || new Usuario();
 
-    console.log(this.activatedRoute.params);
-    this.activatedRoute.params.subscribe(
-      (params) => {
-        console.log(params['id']);
-        this.usarioId = params['id'] != null && params['id'] > 0 ? params['id'] : 0;
-        if (this.usarioId > 0) {
-          this.iniciarFormulario();
-        }
-      });
+    if (this.usuario != null && this.usuario.id > 0) {
+      this.iniciarFormulario();
+    }
   }
 
   iniciarFormulario() {
-    if (this.usarioId != undefined && this.usarioId > 0) {
-      this.usuarioService.getUsuarioById(this.usarioId)
-        .subscribe(
-          result => {
-            this.usuario = result;
+    this.usuarioForm = this.formBuilder.group({
+      id: [this.usuario.id],
+      nome: [this.usuario.nome, [Validators.required]],
+      sobrenome: [this.usuario.sobrenome, [Validators.required]],
+      email: [this.usuario.email, [Validators.required, Validators.pattern('^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$'),],],
+      telefone: [this.usuario.telefone, [Validators.required]],
+    });
 
-            console.log(this.usuario)
-            this.usuarioForm = this.formBuilder.group({
-              id: [this.usuario.id],
-              nome: [this.usuario.nome, [Validators.required]],
-              sobrenome: [this.usuario.sobrenome, [Validators.required]],
-              email: [this.usuario.email, [Validators.required, Validators.pattern('^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$'),],],
-              telefone: [this.usuario.telefone, [Validators.required]],
-            });
-
-            this.validateEmail(null);
-          }
-        );
-    }
+    this.validateEmail(null);
   }
 
   validateEmail(event: any): void {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.isEmailValid = !re.test(this.usuarioForm.controls['email'].value);
-    console.log(this.isEmailValid);
   }
 
 
   onSubmit(): void {
-    console.log(this.usuarioForm);
-    console.log('teste');
-
     this.isSubmited = true;
 
     if (this.usuarioForm.invalid) {
       return;
     }
-    this.usuarioService.postUsuario(this.usuarioForm.value)
-      .subscribe(
-        result => {
-          this.router.navigate(['']);
-        }
-      );
+    if (this.usuario != null && this.usuario.id > 0) {
+
+      this.usuarioService.postUsuario(this.usuarioForm.value)
+        .subscribe(
+          result => {
+            this.router.navigate(['']);
+          }
+        );
+
+    } else {
+      this.autenticacaoService.cadastro(this.usuarioForm.value)
+        .subscribe(
+          result => {
+            this.autenticacaoService.setStorageUserToken(result.usuario, result.token);
+
+            this.router.navigate(['']);
+          }
+        )
+    }
+
   }
 
 }

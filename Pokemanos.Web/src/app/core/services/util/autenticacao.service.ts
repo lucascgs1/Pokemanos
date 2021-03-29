@@ -58,6 +58,6 @@ export class AutenticacaoService {
   }
 
   getStorageUser() {
-    return this.user.value;
+    return this.cacheService.load('currentUser');
   }
 }

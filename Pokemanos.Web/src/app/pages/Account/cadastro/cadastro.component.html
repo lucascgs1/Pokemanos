@@ -21,6 +21,16 @@
     </div>
 
     <div class="col-12 col-md-6 form-group">
+      <label for="telefone" class="control-label">Telefone:</label>
+      <input class="form-control" mask="(00) 0000-0000||(00) 0 0000-0000" formControlName="telefone" placeholder="(11) 9 1234-5678" [ngClass]="{'is-invalid': ((usuarioForm.controls['telefone'].touched || isSubmited) && usuarioForm.value.telefone == '')}">
+      <div *ngIf="(usuarioForm.controls['telefone'].touched || isSubmited) && usuarioForm.value.telefone == ''" class="invalid-feedback">
+        <div class="" *ngIf="usuarioForm.controls['telefone'].errors != null && usuarioForm.controls['telefone'].errors.required">
+          Telefone é obrigatório
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 form-group">
       <label for="email" class="control-label">Email:</label>
       <input type="email" class="form-control" formControlName="email" placeholder="cadastro@silph.com" id="email" (change)="validateEmail($event)" [ngClass]="{'is-invalid': ((usuarioForm.controls['email'].touched || isSubmited) && usuarioForm.value.email == '' || isEmailValid)}">
       <div *ngIf="(usuarioForm.controls['email'].touched || isSubmited) && (usuarioForm.value.email == '' || isEmailValid)" class="invalid-feedback">
@@ -43,7 +53,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-6 form-group" *ngIf="usuario.id == 0 && (usuarioForm.controls['confirmarSenha'].touched && usuarioForm.value.confirmarSenha != '')">
+    <div class="col-12 col-md-6 form-group" *ngIf="usuario.id == 0 && (usuarioForm.controls['senha'].touched && usuarioForm.value.senha != '')">
       <label for="confirmarSenha" class="control-label">Confirmar confirmarSenha:</label>
       <input class="form-control" formControlName="confirmarSenha" placeholder="*******" [ngClass]="{'is-invalid': ((usuarioForm.controls['confirmarSenha'].touched || isSubmited) && usuarioForm.value.confirmarSenha == '' || usuarioForm.value.confirmarSenha.length < 18)}">
       <div *ngIf="(usuarioForm.controls['confirmarSenha'].touched || isSubmited) && usuarioForm.value.confirmarSenha == ''" class="invalid-feedback">
@@ -53,15 +63,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-6 form-group">
-      <label for="telefone" class="control-label">Telefone:</label>
-      <input class="form-control" mask="(00) 0000-0000||(00) 0 0000-0000" formControlName="telefone" placeholder="(11) 9 1234-5678" [ngClass]="{'is-invalid': ((usuarioForm.controls['telefone'].touched || isSubmited) && usuarioForm.value.telefone == '')}">
-      <div *ngIf="(usuarioForm.controls['telefone'].touched || isSubmited) && usuarioForm.value.telefone == ''" class="invalid-feedback">
-        <div class="" *ngIf="usuarioForm.controls['telefone'].errors != null && usuarioForm.controls['telefone'].errors.required">
-          Telefone é obrigatório
-        </div>
-      </div>
-    </div>
+
   </div>
 
   <div class="row">
