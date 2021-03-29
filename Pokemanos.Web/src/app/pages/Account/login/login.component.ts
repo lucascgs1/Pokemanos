@@ -10,6 +10,7 @@ import { UsuarioService } from '../../../core/services/usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { TokenService } from '../../../core/services/util/token.service';
 
 
 // service
@@ -36,10 +37,14 @@ export class LoginComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit(): void {
 
+    console.log(this.tokenService.isActive());
+    if (this.tokenService.isActive())
+      this.router.navigate(['']);
   }
 
   validateEmail(event: any): void {

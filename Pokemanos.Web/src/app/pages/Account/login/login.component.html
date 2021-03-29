@@ -1,8 +1,11 @@
 <div class="row">
   <div class="col-12">
     <div class="row">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="col-12 col-md-6 offset-md-3">
+      <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 card-login">
+        <div class="col-12 titulo">
+          Login
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div class="col-12 form-group">
             <label for="email" class="control-label">Email:</label>
             <input type="email" class="form-control" formControlName="email" placeholder="cadastro@silph.com" id="email" (change)="validateEmail($event)" [ngClass]="{'is-invalid': ((loginForm.controls['email'].touched || isSubmited) && loginForm.value.email == '' || isEmailValid)}">
@@ -26,11 +29,11 @@
             </div>
           </div>
 
-          <div class="col-12 mb-1">
+          <div class="col-12 mb-2">
             <button type="submit" class="btn btn-primary btn-block">Entrar</button>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </div>
