@@ -1,5 +1,5 @@
 // model
-import { LocalStorageSaveOptions } from '../model/cache';
+import { LocalStorageSaveOptions } from '../../model/cache';
 
 // pacote
 import { Injectable } from '@angular/core';

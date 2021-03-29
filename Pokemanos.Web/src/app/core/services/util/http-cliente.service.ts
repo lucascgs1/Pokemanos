@@ -1,42 +1,55 @@
 // model
-import { HttpOptions, HttpVerbs } from '../model/cache';
+import { HttpOptions, HttpVerbs } from '../../model/cache';
 
 // service
 import { CacheService } from './cache.service';
 
 // pacote
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class HttpClientService {
+  public headers = new HttpHeaders().set("Content-Type", "application/json");
+  
+
   constructor(
     private http: HttpClient,
     private _cacheService: CacheService,
+    private tokenService: TokenService,
   ) { }
 
-  get<T>(options: HttpOptions): Observable<T> {
+  getAnonimo<T>(options: HttpOptions): Observable<T> {
     return this.httpCall(HttpVerbs.GET, options)
   }
 
-  delete<T>(options: HttpOptions): Observable<T> {
-    return this.httpCall(HttpVerbs.DELETE, options)
-  }
-
-  post<T>(options: HttpOptions): Observable<T> {
+  postAnonimo<T>(options: HttpOptions): Observable<T> {
     return this.httpCall(HttpVerbs.POST, options)
   }
 
-  put<T>(options: HttpOptions): Observable<T> {
-    return this.httpCall(HttpVerbs.PUT, options)
+  get<T>(options: HttpOptions): Observable<T> {
+    return this.httpCall(HttpVerbs.GET, options, false);
   }
 
-  private httpCall<T>(verb: HttpVerbs, options: HttpOptions): Observable<T> {
+  post<T>(options: HttpOptions): Observable<T> {
+    return this.httpCall(HttpVerbs.POST, options, false);
+  }
+
+  put<T>(options: HttpOptions): Observable<T> {
+    return this.httpCall(HttpVerbs.PUT, options, false);
+  }
+
+  delete<T>(options: HttpOptions): Observable<T> {
+    return this.httpCall(HttpVerbs.DELETE, options, false);
+  }
+
+  private httpCall<T>(verb: HttpVerbs, options: HttpOptions, anonimo: boolean = true): Observable<T> {
 
     // Setup default values
     options.body = options.body || null
@@ -51,8 +64,16 @@ export class HttpClientService {
       }
     }
 
+    if (!anonimo && this.tokenService.isActive()) {
+      this.headers = this.headers.append(
+        "Authorization",
+        "Bearer " + this.tokenService.getToken()
+      );
+    }
+
     return this.http.request<T>(verb, options.url, {
-      body: options.body
+      body: options.body,
+      headers: this.headers
     })
       .pipe(
         switchMap(response => {

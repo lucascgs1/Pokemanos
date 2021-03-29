@@ -1,8 +1,8 @@
 // model
-import { Usuario } from '../../core/model/usuario';
+import { Usuario } from '../../../core/model/usuario';
 
 // service
-import { UsuarioService } from '../../core/services/usuario.service';
+import { UsuarioService } from '../../../core/services/usuario.service';
 
 // package
 import { Component, OnInit } from '@angular/core';

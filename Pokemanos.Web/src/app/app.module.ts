@@ -1,9 +1,9 @@
 // page
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { CadastroComponent } from './pages/cadastro/cadastro.component';
-import { RecuperarSenhaComponent } from './pages/recuperar-senha/recuperar-senha.component';
+import { LoginComponent } from './pages/Account/login/login.component';
+import { CadastroComponent } from './pages/Account/cadastro/cadastro.component';
+import { RecuperarSenhaComponent } from './pages/Account/recuperar-senha/recuperar-senha.component';
 
 // module
 import { AppRoutingModule } from './app-routing.module';

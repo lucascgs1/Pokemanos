@@ -1,7 +1,8 @@
 // service
-import { AutenticacaoService } from './services/autenticacao.service';
-import { CacheService } from './services/cache.service';
-import { HttpClientService } from './services/http-cliente.service';
+import { AutenticacaoService } from './services/util/autenticacao.service';
+import { CacheService } from './services/util/cache.service';
+import { HttpClientService } from './services/util/http-cliente.service';
+import { TokenService } from './services/util/token.service';
 import { UsuarioService } from './services/usuario.service';
 
 // package
@@ -19,9 +20,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    AutenticacaoService,
     HttpClientService,
+    AutenticacaoService,
     CacheService,
+    TokenService,
     UsuarioService,
   ]
 })

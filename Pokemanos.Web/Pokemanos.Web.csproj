@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="src\app\pages\cadastro\cadastro.component.ts~RFeb9fe49.TMP" />
+    <None Remove="src\app\pages\Account\cadastro\cadastro.component.ts~RFeb9fe49.TMP" />
   </ItemGroup>
 
 </Project>

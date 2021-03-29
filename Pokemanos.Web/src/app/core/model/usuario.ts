@@ -29,3 +29,14 @@ export class Login {
   senha: string;
   lembrar: boolean;
 }
+
+
+export class UsuarioLogadoDTO {
+  constructor() {
+    this.usuario = new Usuario();
+    this.token = '';
+  }
+
+  usuario: Usuario;
+  token: string;
+}

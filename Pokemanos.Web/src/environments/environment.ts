@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   endPoints: {
     usuario: 'https://localhost:44302/api/usuario',
+    conta: 'https://localhost:44302/api/Account',
   }
 };
 

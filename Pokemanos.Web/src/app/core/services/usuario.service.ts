@@ -3,6 +3,7 @@ import { Usuario } from '../model/usuario';
 
 // module
 import { environment } from '../../../environments/environment';
+import { HttpClientService } from './util/http-cliente.service';
 
 // package
 import { Injectable } from '@angular/core';
@@ -11,7 +12,6 @@ import { retry, catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { useAnimation } from '@angular/animations';
-import { HttpClientService } from './http-cliente.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,18 +22,9 @@ export class UsuarioService {
     private _http: HttpClientService
   ) { }
 
-  // Headers
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
   getUsuarioById(id: number): Observable<Usuario> {
 
-    return this._http.get<Usuario>({ url: environment.endPoints.usuario + '/' + id, cacheMins: 5 })
-    //return this.httpClient.get<Usuario>(environment.endPoints.usuario + '/' + id)
-    //  .pipe(
-    //    retry(2),
-    //    catchError(this.handleError));
+    return this._http.get<Usuario>({ url: environment.endPoints.usuario + '/' + id, cacheMins: 10 })
   }
 
   getAllUsuario(): Observable<Usuario[]> {
@@ -55,18 +46,12 @@ export class UsuarioService {
 
     console.log(url);
     return this._http.get<any>({ url: 'https://example-api/products', cacheMins: 5 })
-
-
-    return this.httpClient.post(url, usuario, this.httpOptions)
-      .pipe(
-        retry(2),
-        catchError(this.handleError));
   }
 
 
   putCliente(usuario: Usuario): Observable<any> {
 
-    return this.httpClient.put(environment.endPoints.usuario, usuario, this.httpOptions)
+    return this.httpClient.put(environment.endPoints.usuario, usuario)
       .pipe(
         retry(2),
         catchError(this.handleError));
