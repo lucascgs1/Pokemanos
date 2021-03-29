@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Pokemanos.Data.Interfaces;
 using Pokemanos.Model;
@@ -11,8 +12,6 @@ namespace Pokemanos.Services
 {
     public class UsuarioServices : IUsuarioServices
     {
-
-
         #region repositorios
         private readonly ILogger<UsuarioServices> _logger;
 
@@ -28,6 +27,16 @@ namespace Pokemanos.Services
             _logger = logger;
         }
 
+
+        public Usuario GetById(int id)
+        {
+            var usuario = UsuarioRepository.GetById(id);
+            
+            if (usuario == null)
+                throw new Exception("Usuário não encontrado!");
+
+            return usuario;
+        }
 
         public Usuario Save(Usuario usuario, int usuarioId = 0)
         {
@@ -52,6 +61,14 @@ namespace Pokemanos.Services
                 _logger.LogError(ex.Message);
                 throw;
             }
+        }
+
+        public async Task<Usuario> AuthenticateAsync(string email, string senha)
+        {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(senha))
+                throw new ValidationException("Dados não preenchidos!");
+
+            return await UsuarioRepository.GetByEmail(email); ;
         }
 
 

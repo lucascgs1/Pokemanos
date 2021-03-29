@@ -1,7 +1,7 @@
-//page
+// page
 import { HomeComponent } from './pages/home/home.component';
 
-//package
+// package
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';

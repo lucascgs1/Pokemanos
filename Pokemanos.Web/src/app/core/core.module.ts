@@ -1,7 +1,10 @@
-//service
+// service
+import { AutenticacaoService } from './services/autenticacao.service';
+import { CacheService } from './services/cache.service';
+import { HttpClientService } from './services/http-cliente.service';
 import { UsuarioService } from './services/usuario.service';
 
-//package
+// package
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -16,7 +19,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    UsuarioService
+    AutenticacaoService,
+    HttpClientService,
+    CacheService,
+    UsuarioService,
   ]
 })
 

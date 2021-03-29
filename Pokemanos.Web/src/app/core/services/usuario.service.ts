@@ -1,15 +1,17 @@
-//model
+// model
 import { Usuario } from '../model/usuario';
 
-//module
+// module
 import { environment } from '../../../environments/environment';
 
-//package
+// package
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { retry, catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs/internal/observable/throwError';
+import { useAnimation } from '@angular/animations';
+import { HttpClientService } from './http-cliente.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,62 +19,69 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 export class UsuarioService {
   constructor(
     private httpClient: HttpClient,
+    private _http: HttpClientService
   ) { }
 
   // Headers
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
+  getUsuarioById(id: number): Observable<Usuario> {
+
+    return this._http.get<Usuario>({ url: environment.endPoints.usuario + '/' + id, cacheMins: 5 })
+    //return this.httpClient.get<Usuario>(environment.endPoints.usuario + '/' + id)
+    //  .pipe(
+    //    retry(2),
+    //    catchError(this.handleError));
   }
 
-  getClienteById(id: number): Observable<Usuario> {
-    var url = environment.endPoints.usuario;
+  getAllUsuario(): Observable<Usuario[]> {
 
-    return this.httpClient.get<Usuario>(url + '/' + id)
+    return this.httpClient.get<Usuario[]>(environment.endPoints.usuario)
       .pipe(
         retry(2),
-        catchError(this.handleError))
-  }
-
-  getAllClientes(): Observable<Usuario[]> {
-    var url = environment.endPoints.usuario;
-
-    return this.httpClient.get<Usuario[]>(url)
-      .pipe(
-        retry(2),
-        catchError(this.handleError))
+        catchError(this.handleError));
   }
 
 
-  postCliente(cliente: Usuario): Observable<any> {
-    var url = environment.endPoints.usuario;
+  postUsuario(usuario: Usuario): Observable<any> {
 
-    return this.httpClient.post(url, cliente, this.httpOptions)
+    let url = environment.endPoints.usuario;
+
+    if (usuario.id == 0) {
+      url += '/cadastro'
+    }
+
+    console.log(url);
+    return this._http.get<any>({ url: 'https://example-api/products', cacheMins: 5 })
+
+
+    return this.httpClient.post(url, usuario, this.httpOptions)
       .pipe(
         retry(2),
-        catchError(this.handleError))
+        catchError(this.handleError));
   }
 
 
   putCliente(usuario: Usuario): Observable<any> {
-    var url = environment.endPoints.usuario;
 
-    return this.httpClient.put(url, usuario, this.httpOptions)
+    return this.httpClient.put(environment.endPoints.usuario, usuario, this.httpOptions)
       .pipe(
         retry(2),
-        catchError(this.handleError))
+        catchError(this.handleError));
   }
 
   deleteClienteById(id: number): Observable<Usuario> {
-    var url = environment.endPoints.usuario;
 
-    return this.httpClient.delete<Usuario>(url + '/' + id)
+    return this.httpClient.delete<Usuario>(environment.endPoints.usuario + '/' + id)
       .pipe(
         retry(2),
-        catchError(this.handleError))
+        catchError(this.handleError));
   }
 
   // Manipulação de erros
-  handleError(error: HttpErrorResponse) {
+  handleError(error: HttpErrorResponse): Observable<any> {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // Erro ocorreu no lado do client
@@ -83,7 +92,7 @@ export class UsuarioService {
     }
     console.log(errorMessage);
     return throwError(errorMessage);
-  };
+  }
 
 }
 

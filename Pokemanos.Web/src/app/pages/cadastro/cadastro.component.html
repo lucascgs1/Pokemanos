@@ -1,5 +1,77 @@
-<div class="row">
-  <div class="col-12">
+<form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-12 col-md-6 form-group">
+      <label for="nome" class="control-label">Nome:</label>
+      <input type="text" class="form-control" formControlName="nome" placeholder="Silph Co" [ngClass]="{'is-invalid': ((usuarioForm.controls['nome'].touched || isSubmited) && usuarioForm.value.nome == '')}">
+      <div *ngIf="(usuarioForm.controls['nome'].touched || isSubmited) && usuarioForm.value.nome == ''" class="invalid-feedback">
+        <div class="" *ngIf="usuarioForm.controls['nome'].errors != null && usuarioForm.controls['nome'].errors.required">
+          Nome é obrigatório
+        </div>
+      </div>
+    </div>
 
+    <div class="col-12 col-md-6 form-group">
+      <label for="sobrenome" class="control-label">Sobrenome:</label>
+      <input type="text" class="form-control" formControlName="sobrenome" placeholder="Silph Company" [ngClass]="{'is-invalid': ((usuarioForm.controls['sobrenome'].touched || isSubmited) && usuarioForm.value.sobrenome == '')}">
+      <div *ngIf="(usuarioForm.controls['sobrenome'].touched || isSubmited) && usuarioForm.value.sobrenome == ''" class="invalid-feedback">
+        <div class="" *ngIf="usuarioForm.controls['sobrenome'].errors != null && usuarioForm.controls['sobrenome'].errors.required">
+          Sobrenome é obrigatório
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 form-group">
+      <label for="email" class="control-label">Email:</label>
+      <input type="email" class="form-control" formControlName="email" placeholder="cadastro@silph.com" id="email" (change)="validateEmail($event)" [ngClass]="{'is-invalid': ((usuarioForm.controls['email'].touched || isSubmited) && usuarioForm.value.email == '' || isEmailValid)}">
+      <div *ngIf="(usuarioForm.controls['email'].touched || isSubmited) && (usuarioForm.value.email == '' || isEmailValid)" class="invalid-feedback">
+        <div class="" *ngIf="usuarioForm.controls['email'].errors != null && usuarioForm.controls['email'].errors.required">
+          E-mail é obrigatório
+        </div>
+        <div class="" *ngIf="(usuarioForm.value.email != '' && isEmailValid)">
+          Insira um e-mail valido
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 form-group" *ngIf="usuario.id == 0">
+      <label for="senha" class="control-label">Senha:</label>
+      <input class="form-control" formControlName="senha" placeholder="*******" [ngClass]="{'is-invalid': ((usuarioForm.controls['senha'].touched || isSubmited) && usuarioForm.value.senha == '' || usuarioForm.value.senha.length < 18)}">
+      <div *ngIf="(usuarioForm.controls['senha'].touched || isSubmited) && usuarioForm.value.senha == ''" class="invalid-feedback">
+        <div class="" *ngIf="usuarioForm.controls['senha'].errors != null && (usuarioForm.controls['senha'].errors.required || usuarioForm.value.senha.length < 18)">
+          senha é obrigatório
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 form-group" *ngIf="usuario.id == 0 && (usuarioForm.controls['confirmarSenha'].touched && usuarioForm.value.confirmarSenha != '')">
+      <label for="confirmarSenha" class="control-label">Confirmar confirmarSenha:</label>
+      <input class="form-control" formControlName="confirmarSenha" placeholder="*******" [ngClass]="{'is-invalid': ((usuarioForm.controls['confirmarSenha'].touched || isSubmited) && usuarioForm.value.confirmarSenha == '' || usuarioForm.value.confirmarSenha.length < 18)}">
+      <div *ngIf="(usuarioForm.controls['confirmarSenha'].touched || isSubmited) && usuarioForm.value.confirmarSenha == ''" class="invalid-feedback">
+        <div class="" *ngIf="usuarioForm.controls['confirmarSenha'].errors != null && (usuarioForm.controls['confirmarSenha'].errors.required || usuarioForm.value.confirmarSenha.length < 18)">
+          confirmarSenha é obrigatório
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 form-group">
+      <label for="telefone" class="control-label">Telefone:</label>
+      <input class="form-control" mask="(00) 0000-0000||(00) 0 0000-0000" formControlName="telefone" placeholder="(11) 9 1234-5678" [ngClass]="{'is-invalid': ((usuarioForm.controls['telefone'].touched || isSubmited) && usuarioForm.value.telefone == '')}">
+      <div *ngIf="(usuarioForm.controls['telefone'].touched || isSubmited) && usuarioForm.value.telefone == ''" class="invalid-feedback">
+        <div class="" *ngIf="usuarioForm.controls['telefone'].errors != null && usuarioForm.controls['telefone'].errors.required">
+          Telefone é obrigatório
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+
+  <div class="row">
+    <div class="col-12 col-md-3 offset-md-6 mb-1" routerLink="">
+      <div class="btn btn-secondary btn-block">
+        Cancelar
+      </div>
+    </div>
+    <div class="col-12 col-md-3 mb-1">
+      <button type="submit" class="btn btn-success btn-block">Salvar</button>
+    </div>
+  </div>
+</form>

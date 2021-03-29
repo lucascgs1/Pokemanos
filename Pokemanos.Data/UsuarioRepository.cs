@@ -1,5 +1,7 @@
-﻿using Pokemanos.Data.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Pokemanos.Data.Interfaces;
 using Pokemanos.Model;
+using System.Threading.Tasks;
 
 namespace Pokemanos.Data
 {
@@ -12,5 +14,10 @@ namespace Pokemanos.Data
             _context = context;
         }
 
+
+        public async Task<Usuario> GetByEmail(string email)
+        {
+            return await DbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
+        }
     }
 }

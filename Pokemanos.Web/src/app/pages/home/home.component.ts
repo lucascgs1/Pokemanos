@@ -1,3 +1,7 @@
+// service
+import { UsuarioService } from '../../core/services/usuario.service';
+
+//pacote
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public usuarioService: UsuarioService
+  ) { }
 
   ngOnInit(): void {
+    this.usuarioService.getUsuarioById(1)
+      .subscribe(
+        result => {
+          console.log(result);
+        }
+      )
   }
 
 }

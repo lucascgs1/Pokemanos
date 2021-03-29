@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   endPoints: {
-    usuario: 'https://crudapi20210308182848.azurewebsites.net/api/cliente',
+    usuario: 'https://localhost:44302/api/usuario',
   }
 };
 

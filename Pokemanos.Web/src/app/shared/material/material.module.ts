@@ -1,4 +1,4 @@
-//module
+// module
 import { A11yModule } from '@angular/cdk/a11y';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PortalModule } from '@angular/cdk/portal';
@@ -42,7 +42,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-//package
+// package
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -91,7 +91,7 @@ import { CommonModule } from '@angular/common';
     MatTabsModule,
     MatToolbarModule,
 
-    //cdk
+    // cdk
     MatNativeDateModule,
     MatTooltipModule,
     MatTreeModule,

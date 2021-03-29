@@ -1,11 +1,8 @@
-//page
-
-//module
+// module
 import { MaterialModule } from './material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-//package
-//import { AppMaskerModule } from 'brmasker';
+// package
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';

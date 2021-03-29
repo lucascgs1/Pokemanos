@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pokemanos.Api.Model;
 using Pokemanos.Model;
+using Pokemanos.Services;
 using Pokemanos.Services.Interfaces;
 using Pokemones.API.Helper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -30,29 +33,20 @@ namespace Pokemanos.Api.Controllers
             this.appSettings = appSettings;
         }
 
-
-
-        [HttpPost]
-        [Route("cadastro")]
-        [AllowAnonymous]
-        public IActionResult Register([FromServices] IUsuarioServices usuarioServices, [FromBody] Usuario usuario)
+        [HttpGet("{id}")]
+        //[Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult GetById([FromServices] IUsuarioServices usuarioServices, int id)
         {
             try
             {
-                var teste = this.appSettings;
+                var usuario = usuarioServices.GetById(id);
 
-                var teste2 = Environment.GetEnvironmentVariable("AppSettings");
-                if (ModelState.IsValid)
-                {
-                    var newUser = usuarioServices.Save(usuario);
-                    var token = TokenHelper.GenerateToken(newUser, this.appSettings.Value.Secret);
+                if (usuario == null)
+                    return NotFound("Usuário não encontrado!");
 
-                    return Ok(new { usuario = newUser, token });
-                }
-                else
-                {
-                    return ValidationProblem();
-                }
+                return Ok(new { usuario });
             }
             catch (Exception ex)
             {
@@ -60,6 +54,9 @@ namespace Pokemanos.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+
 
         [HttpPost]
         [AllowAnonymous]
