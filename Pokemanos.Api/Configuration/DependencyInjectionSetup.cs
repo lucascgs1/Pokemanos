@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Pokemanos.Data;
 using Pokemanos.Data.Interfaces;
 using Pokemanos.Services;
@@ -20,6 +17,7 @@ namespace Pokemanos.Api.Configuration
 
             #region repositorios
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<ICodigoSegurancaRepository, CodigoSegurancaRepository>();
             #endregion
 
             #region servicos

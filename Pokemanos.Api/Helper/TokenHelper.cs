@@ -1,21 +1,22 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Pokemanos.Api.Model;
+﻿using Microsoft.IdentityModel.Tokens;
 using Pokemanos.Model;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Pokemones.API.Helper
 {
 
     public static class TokenHelper
     {
+        /// <summary>
+        /// Gerar token
+        /// </summary>
+        /// <param name="usuario">dados do usuario</param>
+        /// <param name="secret">chave de codificacao</param>
+        /// <returns></returns>
         public static string GenerateToken(Usuario usuario, string secret)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -35,11 +36,20 @@ namespace Pokemones.API.Helper
             return tokenHandler.WriteToken(token);
         }
 
+        /// <summary>
+        /// Obtem o usuario pelo token
+        /// </summary>
+        /// <param name="claimsIdentity"></param>
+        /// <param name="claimName"></param>
+        /// <returns></returns>
         public static string GetClaims(IIdentity claimsIdentity, string claimName)
         {
             var identity = claimsIdentity as ClaimsIdentity;
-            if (identity != null) return identity.FindFirst(claimName)?.Value;
-            else return null;
+
+            if (identity != null)
+                return identity.FindFirst(claimName)?.Value;
+            else
+                return null;
         }
     }
 }

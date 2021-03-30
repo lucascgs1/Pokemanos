@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Pokemanos.Model
@@ -37,5 +36,7 @@ namespace Pokemanos.Model
         [DataType(DataType.DateTime)]
         [Display(Name = "Data", Prompt = "Digite o {0}")]
         public DateTime DataCadastro { get; set; }
+
+        public CodigoSeguranca CodigoSeguranca { get; set; }
     }
 }

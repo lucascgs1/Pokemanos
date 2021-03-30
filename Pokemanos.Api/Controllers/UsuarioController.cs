@@ -5,15 +5,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pokemanos.Api.Model;
 using Pokemanos.Model;
-using Pokemanos.Services;
 using Pokemanos.Services.Interfaces;
 using Pokemones.API.Helper;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace Pokemanos.Api.Controllers
 {
@@ -33,6 +29,12 @@ namespace Pokemanos.Api.Controllers
             this.appSettings = appSettings;
         }
 
+        /// <summary>
+        /// Obtem um usuario pelo id
+        /// </summary>
+        /// <param name="usuarioServices">servico de usuario</param>
+        /// <param name="id">codigo do usuario</param>
+        /// <returns>dados do usuario</returns>
         [HttpGet("{id}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -55,11 +57,38 @@ namespace Pokemanos.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// retorna todos os usuarios cadastrados
+        /// </summary>
+        /// <param name="usuarioServices">servico de usuario</param>
+        /// <returns>lista de usuarios</returns>
+        [HttpGet]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult GetAll([FromServices] IUsuarioServices usuarioServices)
+        {
+            try
+            {
+                var usuarios = usuarioServices.GetAllUsuarios().ToList();
 
-
-
+                return Ok(usuarios);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return Problem(ex.Message);
+            }
+        }
+        
+        /// <summary>
+        /// Atualiza um usuario
+        /// </summary>
+        /// <param name="usuarioServices">servico de usuario</param>
+        /// <param name="usuario">dados do usuario</param>
+        /// <returns>usuario atualizado</returns>
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult Post([FromServices] IUsuarioServices usuarioServices, [FromBody] Usuario usuario)
         {
             try
@@ -74,6 +103,30 @@ namespace Pokemanos.Api.Controllers
             catch (Exception ex)
             {
                 return ValidationProblem(ex.Message);
+            }
+        }
+        
+        /// <summary>
+        /// Deleta um usuario
+        /// </summary>
+        /// <param name="usuarioServices">Servico de usuario</param>
+        /// <param name="id">codigo do usuario</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult Delete([FromServices] IUsuarioServices usuarioServices, int id)
+        {
+            try
+            {
+                usuarioServices.DeleteUsuarioById(id);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return Problem(ex.Message);
             }
         }
     }
