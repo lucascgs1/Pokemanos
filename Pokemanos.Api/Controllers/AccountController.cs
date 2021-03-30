@@ -36,8 +36,7 @@ namespace Pokemanos.Api.Controllers
         /// <param name="usuarioServices">servico de usuario</param>
         /// <param name="login">dados de login</param>
         /// <returns>usuario e token de autenticacao</returns>
-        [HttpPost]
-        [Route("login")]
+        [HttpPost("login")]
         [AllowAnonymous]
         public async Task<ActionResult> Autenticar([FromServices] IUsuarioServices usuarioServices, [FromBody] LoginViewModel login)
         {
@@ -68,8 +67,8 @@ namespace Pokemanos.Api.Controllers
         /// <param name="usuarioServices">serivico de usuario</param>
         /// <param name="usuario">dados do usuario</param>
         /// <returns>dados do usuario e token de autenticacao</returns>
-        [HttpPost]
-        [Route("cadastro")]
+
+        [HttpPost("cadastro")]
         [AllowAnonymous]
         public IActionResult Cadastro([FromServices] IUsuarioServices usuarioServices, [FromBody] Usuario usuario)
         {
@@ -100,10 +99,9 @@ namespace Pokemanos.Api.Controllers
         /// <param name="usuarioServices">servico de usuario</param>
         /// <param name="email">email do usuario</param>
         /// <returns></returns>
-        [HttpPost]
-        [Route("recuperar-senha/{email: string}")]
+        [HttpPost("gerarCodigoSeguranca/{email}")]
         [AllowAnonymous]
-        public IActionResult PostGerarCodigoSeguranca([FromServices] IUsuarioServices usuarioServices, [FromQuery] string email)
+        public IActionResult PostGerarCodigoSeguranca([FromServices] IUsuarioServices usuarioServices, string email)
         {
             try
             {
@@ -124,10 +122,9 @@ namespace Pokemanos.Api.Controllers
         /// <param name="usuarioServices">servico de usuario</param>
         /// <param name="trocarSenha">dto com email, senha e codigo de seguranca</param>
         /// <returns></returns>
-        [HttpPost]
-        [Route("RecuperarSenha")]
+        [HttpPost("recuperarSenha")]
         [AllowAnonymous]
-        public IActionResult RecuperarSenha([FromServices] IUsuarioServices usuarioServices, [FromBody] TrocarSenhaDTO trocarSenha)
+        public IActionResult PostRecuperarSenha([FromServices] IUsuarioServices usuarioServices, [FromBody] TrocarSenhaDTO trocarSenha)
         {
             try
             {
