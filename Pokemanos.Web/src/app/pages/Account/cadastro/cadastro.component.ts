@@ -3,12 +3,12 @@ import { Usuario } from '../../../core/model/usuario';
 
 // service
 import { UsuarioService } from '../../../core/services/usuario.service';
+import { AutenticacaoService } from '../../../core/services/util/autenticacao.service';
 
 // package
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { AutenticacaoService } from '../../../core/services/util/autenticacao.service';
 
 @Component({
   selector: 'app-cadastro',

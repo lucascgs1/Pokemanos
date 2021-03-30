@@ -1,1 +1,67 @@
-<p>recuperar-senha works!</p>
+<div class="row">
+  <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 card-senha">
+    <form [formGroup]="senhaForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-12 titulo">
+          Esqueci minha senha
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 form-group">
+          <label for="email" class="control-label">Email:</label>
+          <input type="email" class="form-control" formControlName="email" placeholder="cadastro@silph.com" id="email" (change)="validateEmail($event)" [ngClass]="{'is-invalid': ((senhaForm.controls['email'].touched || isSubmited) && senhaForm.value.email == '' || isEmailValid)}">
+          <div *ngIf="(senhaForm.controls['email'].touched || isSubmited) && (senhaForm.value.email == '' || isEmailValid)" class="invalid-feedback">
+            <div class="" *ngIf="senhaForm.controls['email'].errors != null && senhaForm.controls['email'].errors.required">
+              E-mail é obrigatório
+            </div>
+            <div class="" *ngIf="(senhaForm.value.email != '' && isEmailValid)">
+              Insira um e-mail valido
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <mat-slide-toggle class="example-margin" [color]="color" [checked]="hasToken" (change)="atualizarFormulario($event)">
+            Tenho o código
+          </mat-slide-toggle>
+        </div>
+      </div>
+      <div class="row" *ngIf="hasToken">
+        <div class="col-12 col-md-6 form-group">
+          <label for="senha" class="control-label">
+            Senha:
+          </label>
+          <input class="form-control" formControlName="senha" placeholder="*******" [ngClass]="{'is-invalid': ((senhaForm.controls['senha'].touched || isSubmited) && senhaForm.value.senha == '' || senhaForm.value.senha.length < 18)}">
+          <div *ngIf="(senhaForm.controls['senha'].touched || isSubmited) && senhaForm.value.senha == ''" class="invalid-feedback">
+            <div class="" *ngIf="senhaForm.controls['senha'].errors != null && (senhaForm.controls['senha'].errors.required || senhaForm.value.senha.length < 18)">
+              Senha é obrigatório
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 form-group">
+          <label for="confirmarSenha" class="control-label">
+            Confirmar confirmarSenha:
+          </label>
+          <input class="form-control" formControlName="confirmarSenha" placeholder="*******" [ngClass]="{'is-invalid': ((senhaForm.controls['confirmarSenha'].touched || isSubmited) && senhaForm.value.confirmarSenha == '' || senhaForm.value.confirmarSenha.length < 18)}">
+          <div *ngIf="(senhaForm.controls['confirmarSenha'].touched || isSubmited) && senhaForm.value.confirmarSenha == ''" class="invalid-feedback">
+            <div class="" *ngIf="senhaForm.controls['confirmarSenha'].errors != null && (senhaForm.controls['confirmarSenha'].errors.required || senhaForm.value.confirmarSenha.length < 18)">
+              Confirmar Senha é obrigatório
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-3 offset-md-6 mb-1" routerLink="">
+          <div class="btn btn-secondary btn-block">
+            Cancelar
+          </div>
+        </div>
+        <div class="col-12 col-md-3 mb-1">
+          <button type="submit" class="btn btn-success btn-block">Salvar</button>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+</div>

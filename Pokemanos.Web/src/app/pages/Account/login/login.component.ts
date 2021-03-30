@@ -65,9 +65,14 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (result) => {
           this.autenticacaoService.setStorageUserToken(result.usuario, result.token);
-                  
+
           this.router.navigate(['']);
         }
       );
   }
+
+  irCadastro() {
+    this.router.navigate(['cadastro']);
+  }
 }
+

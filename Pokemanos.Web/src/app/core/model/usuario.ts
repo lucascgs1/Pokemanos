@@ -40,3 +40,15 @@ export class UsuarioLogadoDTO {
   usuario: Usuario;
   token: string;
 }
+
+export class RecuperarSenhaDTO {
+  constructor() {
+    this.email = '';
+    this.senhaNova = '';
+    this.codigoSeguranca = '';
+  }
+
+  email: string;
+  senhaNova: string;
+  codigoSeguranca: string;
+}
