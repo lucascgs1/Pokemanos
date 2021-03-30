@@ -42,10 +42,12 @@ export class RecuperarSenhaComponent implements OnInit {
   atualizarFormulario(event: any): void {
     let email = this.senhaForm.value.email;
 
+    this.hasToken = event.checked;
+
     if (this.hasToken) {
       this.senhaForm = this.formBuilder.group({
         email: [email, [Validators.required, Validators.pattern('^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$'),],],
-        token: ['', [Validators.required]],
+        codigoSeguranca: ['', [Validators.required]],
         senha: ['', [Validators.required],],
         confirmarSenha: ['', [Validators.required],],
       });
@@ -60,10 +62,12 @@ export class RecuperarSenhaComponent implements OnInit {
   onSubmit(): void {
     this.isSubmited = true;
 
+
     if (this.senhaForm.invalid) {
       return;
     }
 
+    console.log(this.senhaForm);
 
     //if (this.usuario != null && this.usuario.id > 0) {
 
